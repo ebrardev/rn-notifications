@@ -1,12 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import { useEffect } from 'react';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+      shouldShowAlert: true
+    }
+  }
+});
 
 export default function App() {
+  useEffect(()=>{
+const subscription =Notifications.addNotificationReceivedListener((notification) =>{
+  console.log("notification received", notification)
+  const userName=notification.request.content.data.username  
+  console.log(userName)
+})
+return () => {
+  subscription.remove()
+}
+  },[] )
   Notifications.scheduleNotificationAsync({
     content:{
-      title: 'My first local notification',
-      body: 'This is the body of the notification',
+      title: 'bu kez pek bir afilli yalnızlık',
+      body: 'aldatan bir kadın kadar düşman',
       data: {username:"ebrar"}
     },
     trigger:{
