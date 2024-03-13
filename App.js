@@ -20,8 +20,13 @@ const subscription =Notifications.addNotificationReceivedListener((notification)
   const userName=notification.request.content.data.username  
   console.log(userName)
 })
+const subscription2= Notifications.addNotificationResponseReceivedListener((response) =>{
+  console.log("notification response", response)
+
+})
 return () => {
   subscription.remove()
+  subscription2.remove()
 }
   },[] )
   Notifications.scheduleNotificationAsync({
